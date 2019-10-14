@@ -1,0 +1,6 @@
+general:
+  seed: 0
+
+path:
+  data_csv: /media/benamira/19793564030D4273/MCsBackup/Alexis_project/my_IMDB_guess/data/MovieGenre.csv
+  data_posters: /media/benamira/19793564030D4273/MCsBackup/Alexis_project/movie_poster/
