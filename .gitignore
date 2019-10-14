@@ -1,4 +1,4 @@
-config/default.yaml
+config/config.yaml
 src/__pycache__/
 utils/__pycache__/
 utils/*.pyc
