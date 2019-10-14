@@ -14,13 +14,6 @@ class Dataloader(Dataset):
     """Face Landmarks dataset."""
 
     def __init__(self, config, phase, transform=None):
-        """
-        Args:
-            csv_file (string): Path to the csv file with annotations.
-            root_dir (string): Directory with all the images.
-            transform (callable, optional): Optional transform to be applied
-                on a sample.
-        """
         data_dico = {}
         self.phase = phase
         if phase == "train":
@@ -40,10 +33,8 @@ class Dataloader(Dataset):
         self.transform = transform
         self.data_csv = pd.read_csv(config.path.data_csv, encoding='latin-1').dropna()
 
-
-
     def __len__(self):
-        return len(self.dico)-1
+        return len(self.dico)
 
     def __getitem__(self, idx):
         img_name = self.dico[idx]["nom_file"]
