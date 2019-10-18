@@ -1,5 +1,6 @@
 general:
   seed: 0
+  categorie: [0,2,4,6,8,10]
 
 path:
   data_csv: /media/benamira/19793564030D4273/MCsBackup/Alexis_project/my_IMDB_guess/data/MovieGenre.csv
@@ -14,5 +15,5 @@ train:
   num_epochs: 10
   learning_rate: 0.001
   weight_decay: 0.00001
-  batch_size: 2
+  batch_size: 4
   num_workers: 2

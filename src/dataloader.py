@@ -32,6 +32,7 @@ class Dataloader(Dataset):
         self.config = config
         self.transform = transform
         self.data_csv = pd.read_csv(config.path.data_csv, encoding='latin-1').dropna()
+        self.limites = self.config.general.categorie
 
     def __len__(self):
         return len(self.dico)
@@ -39,12 +40,19 @@ class Dataloader(Dataset):
     def __getitem__(self, idx):
         img_name = self.dico[idx]["nom_file"]
         label_idx = self.dico[idx]["id"]
-        label = self.data_csv["IMDB Score"][idx]
+        label = self.data_csv["IMDB Score"][label_idx]
         image = io.imread(img_name)
+        n_label = self.categorie(label)
         #label = np.concatenate((normals,diffuse,roughness,specular),axis = 2)
         if self.transform:
-            input_t = self.transform(input)
-            sample = {'input': input_t, 'label': label}
+            input_t = self.transform(image)
+            sample = {'input': input_t, 'label': n_label}
         else:
-            sample = {'input': input, 'label': normals}
+            sample = {'input': input, 'label': n_label}
         return sample
+
+    def categorie(self, label):
+        for index_l, limit in enumerate(self.limites):
+            if limit != self.limites[-1]:
+                if limit<=label and label<=self.limites[index_l+1]:
+                    return index_l

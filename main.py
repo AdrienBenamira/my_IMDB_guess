@@ -10,7 +10,8 @@ from torch.utils.tensorboard import SummaryWriter
 import random
 import numpy as np
 from src.trainer import train_model
-
+from src.model_conv import Net
+import torch.nn as nn
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 config = Config()
@@ -43,3 +44,15 @@ dataloaders = {'train': dataloadered_train, 'val': dataloadered_val, 'test':data
 print("End Load data")
 print()
 print("Load model")
+
+net = Net(len(config.general.categorie) - 1)
+net.to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(net.parameters(), lr=config.train.learning_rate,
+weight_decay=config.train.weight_decay)
+print("End Load model")
+print()
+print("Start training model")
+print()
+best_model = train_model(config, writer, net, dataloaders, criterion, optimizer,device, num_epochs=config.train.num_epochs)
+print('Finished Training')
