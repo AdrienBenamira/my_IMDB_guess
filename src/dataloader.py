@@ -25,7 +25,6 @@ class Dataloader(Dataset):
         os.chdir(data_path)
         for index_file, file in enumerate(glob.glob("*.png")):
             split_name = file.split(";")
-            print(split_name)
             if len(split_name) == 6:
                 compteur = int(split_name[0])
                 date = split_name[1]
