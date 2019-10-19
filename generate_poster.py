@@ -35,4 +35,4 @@ for i in liste_index:
     except:
         pass
     if compteur % 100 == 99:
-        print(i/n)
+        print(100*compteur/n)
