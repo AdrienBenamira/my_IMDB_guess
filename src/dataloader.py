@@ -25,9 +25,23 @@ class Dataloader(Dataset):
         os.chdir(data_path)
         for index_file, file in enumerate(glob.glob("*.png")):
             split_name = file.split(";")
-            data_dico[index_file] = {'nom_file': data_path+"/"+file, "id": int(split_name[0]),
-                                             "date": split_name[1],
-                                             "film": split_name[2].split(("."))[0]}
+            print(split_name)
+            if len(split_name) == 6:
+                compteur = int(split_name[0])
+                date = split_name[1]
+                name_film = split_name[2]
+                imdbid = int(split_name[3])
+                note = float(split_name[4])/10
+                genre = split_name[5]
+                data_dico[index_file] = {
+                'nom_file': data_path+"/"+file,
+                "compteur": int(compteur),
+                "date": date,
+                "imdbid": imdbid,
+                "note" : note,
+                "genre" : genre,
+                "name_film": split_name[2],
+                }
         self.dico =  data_dico
         self.config = config
         self.transform = transform
@@ -39,9 +53,8 @@ class Dataloader(Dataset):
 
     def __getitem__(self, idx):
         img_name = self.dico[idx]["nom_file"]
-        label_idx = self.dico[idx]["id"]
-        label = self.data_csv["IMDB Score"][label_idx]
         image = io.imread(img_name)
+        label = self.dico[idx]["note"]
         n_label = self.categorie(label)
         #label = np.concatenate((normals,diffuse,roughness,specular),axis = 2)
         if self.transform:
